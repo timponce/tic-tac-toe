@@ -1,6 +1,46 @@
 const gameBoard = (() => {
-    let boardArray = [a1, a2, a3, b1, b2, b3, c1, c2, c3]
+
+    let boardArray = ['', '', '', '', '', '', '', '', '']
+    const tiles = document.querySelectorAll('.tiles')
+
     return {
         boardArray,
+        tiles,
     };
+
 })();
+
+const gamePlay = (() => {
+
+    function placeToken(e) {
+        const position = this.dataset.key;
+        console.log(position);
+        gameBoard.boardArray.splice(position-1, 1, Player2.token);
+        displayController.updateDisplay();
+    };
+
+    gameBoard.tiles.forEach(tiles => tiles.addEventListener('click', placeToken));
+
+})();
+
+const displayController = (() => {
+
+    const updateDisplay = () => {
+    for (let i = 0; i < gameBoard.boardArray.length; i++) {
+        gameBoard.tiles[i].innerText = gameBoard.boardArray[i];
+    }};
+
+    return {
+        updateDisplay,
+    }
+
+})();
+
+const players = (name, token) => {
+    return {name, token};
+}
+
+
+//Temporarily in global scope to make building application easier
+const Player1 = players('Player 1', '+');
+const Player2 = players('Player 2', 'o');
