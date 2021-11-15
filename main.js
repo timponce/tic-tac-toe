@@ -1,6 +1,6 @@
 const gameBoard = (() => {
 
-    let boardArray = ['', '', '', '', '', '', '', '', '']
+    const boardArray = ['', '', '', '', '', '', '', '', '']
     const tiles = document.querySelectorAll('.tiles')
 
     return {
@@ -13,9 +13,22 @@ const gameBoard = (() => {
 const gamePlay = (() => {
 
     function placeToken(e) {
+
+        function getPlayerTurn() {
+            let currentPlayer;
+            const player1Array = gameBoard.boardArray.filter(a => a.includes('+'));
+            const player2Array = gameBoard.boardArray.filter(a => a.includes('o'));
+            if (player1Array.length === player2Array.length) {
+                currentPlayer = Player1;
+            } else if (player1Array.length > player2Array.length) {
+                currentPlayer = Player2;
+            }
+            return currentPlayer.token;
+        }
+        
         const position = this.dataset.key;
         console.log(position);
-        gameBoard.boardArray.splice(position-1, 1, Player2.token);
+        gameBoard.boardArray.splice(position-1, 1, getPlayerTurn());
         displayController.updateDisplay();
     };
 
