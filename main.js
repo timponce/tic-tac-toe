@@ -12,24 +12,24 @@ const gameBoard = (() => {
 
 const gamePlay = (() => {
 
-    function placeToken(e) {
-
-        function getPlayerTurn() {
-            let currentPlayer;
-            const player1Array = gameBoard.boardArray.filter(a => a.includes('+'));
-            const player2Array = gameBoard.boardArray.filter(a => a.includes('o'));
-            if (player1Array.length === player2Array.length) {
-                currentPlayer = Player1;
-            } else if (player1Array.length > player2Array.length) {
-                currentPlayer = Player2;
-            }
-            return currentPlayer.token;
+    function getPlayerTurn() {
+        let currentPlayer;
+        const player1Array = gameBoard.boardArray.filter(a => a.includes('x'));
+        const player2Array = gameBoard.boardArray.filter(a => a.includes('o'));
+        if (player1Array.length === player2Array.length) {
+            currentPlayer = Player1;
+        } else if (player1Array.length > player2Array.length) {
+            currentPlayer = Player2;
         }
-        
+        return currentPlayer.token;
+    }
+
+    function placeToken(e) {
         const position = this.dataset.key;
-        console.log(position);
+        if (gameBoard.boardArray[position-1] === '') {
         gameBoard.boardArray.splice(position-1, 1, getPlayerTurn());
         displayController.updateDisplay();
+        };
     };
 
     gameBoard.tiles.forEach(tiles => tiles.addEventListener('click', placeToken));
@@ -55,5 +55,5 @@ const players = (name, token) => {
 
 
 //Temporarily in global scope to make building application easier
-const Player1 = players('Player 1', '+');
+const Player1 = players('Player 1', 'x');
 const Player2 = players('Player 2', 'o');
