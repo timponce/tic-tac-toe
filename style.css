@@ -28,6 +28,9 @@ html {
     line-height: 200px;
     text-align: center;
     font-size: 100px;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .tiles:hover {
