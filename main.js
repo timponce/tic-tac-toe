@@ -70,6 +70,10 @@ const gamePlay = (() => {
     function endGame() {
         const gameBoardContainer = document.getElementById('game-board-container');
         gameBoardContainer.classList.toggle('disabled');
+        const main = document.getElementById('main')
+        let restartBtn = document.createElement('div');
+        restartBtn.classList.add('restart-button')
+        main.appendChild(restartBtn);
     }
 
     gameBoard.tiles.forEach(tiles => tiles.addEventListener('click', placeToken));
