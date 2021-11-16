@@ -21,6 +21,11 @@ html {
     width: 602px;
 }
 
+.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
 .tiles {
     height: 200px;
     width: 200px;

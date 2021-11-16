@@ -20,7 +20,8 @@ const gamePlay = (() => {
             currentPlayer = Player1;
         } else if (player1Array.length > player2Array.length) {
             currentPlayer = Player2;
-        }
+        } else if (player2Array.length === 5)
+        console.log(player2Array.length)
         return currentPlayer.token;
     };
 
@@ -34,7 +35,6 @@ const gamePlay = (() => {
     };
 
     function checkForResult() {
-
         let board = gameBoard.boardArray.slice();
 
         let win = [
@@ -50,15 +50,27 @@ const gamePlay = (() => {
         
         let a = Player1.token
         let b = Player2.token
+        let player1Array = gameBoard.boardArray.filter(a => a.includes(Player1.token));
         for (let i = 0; i < win.length; i++) {
             if (win[i] === a+a+a) {
                 console.log(Player1.name + ' wins!');
+                endGame();
             } else if (win[i] === b+b+b) {
                 console.log(Player2.name + ' wins!');
+                endGame();
+            } else if (player1Array.length === 5) {
+                console.log('Tie game');
+                endGame();
+                return;
             }
         }
 
     };
+
+    function endGame() {
+        const gameBoardContainer = document.getElementById('game-board-container');
+        gameBoardContainer.classList.toggle('disabled');
+    }
 
     gameBoard.tiles.forEach(tiles => tiles.addEventListener('click', placeToken));
 
