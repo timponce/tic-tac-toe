@@ -8,13 +8,20 @@ html {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+#main {
+    height: 602px;
+    width: 90vw;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 20px;
+}
+
 #game-board-container {
+    flex: 0 0 auto;
     display: grid;
     grid-template: 1fr 1fr 1fr / 1fr 1fr 1fr;
-    position: absolute;
-    right: 0px;
-    left: 0px;
-    margin: 0 auto;
     background-color: aliceblue;
     border: 1px solid black;
     height: 602px;
@@ -23,7 +30,7 @@ html {
 
 .disabled {
     pointer-events: none;
-    opacity: 0.5;
+    opacity: 0.6;
 }
 
 .tiles {
@@ -42,4 +49,20 @@ html {
     cursor: pointer;
     background-color: cadetblue;
     border: 1px solid black;
+}
+
+.announcement {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.restart-button {
+    font-size: 24px;
+    border: 1px solid black;
+    padding: 4px;
+    border-radius: 8px;
+}
+
+.restart-button:hover {
+    cursor: pointer;
 }

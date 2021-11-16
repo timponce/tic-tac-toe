@@ -14,14 +14,13 @@ const gamePlay = (() => {
 
     function getPlayerTurn() {
         let currentPlayer;
-        const player1Array = gameBoard.boardArray.filter(a => a.includes(Player1.token));
-        const player2Array = gameBoard.boardArray.filter(b => b.includes(Player2.token));
+        const player1Array = gameBoard.boardArray.filter(a => a.includes(player1.token));
+        const player2Array = gameBoard.boardArray.filter(b => b.includes(player2.token));
         if (player1Array.length === player2Array.length) {
-            currentPlayer = Player1;
+            currentPlayer = player1;
         } else if (player1Array.length > player2Array.length) {
-            currentPlayer = Player2;
-        } else if (player2Array.length === 5)
-        console.log(player2Array.length)
+            currentPlayer = player2;
+        }
         return currentPlayer.token;
     };
 
@@ -48,32 +47,49 @@ const gamePlay = (() => {
         board[2] + board[4] + board[6],
         ]
         
-        let a = Player1.token
-        let b = Player2.token
-        let player1Array = gameBoard.boardArray.filter(a => a.includes(Player1.token));
+        let a = player1.token
+        let b = player2.token
+        let player1Array = gameBoard.boardArray.filter(a => a.includes(player1.token));
         for (let i = 0; i < win.length; i++) {
             if (win[i] === a+a+a) {
-                console.log(Player1.name + ' wins!');
-                endGame();
-            } else if (win[i] === b+b+b) {
-                console.log(Player2.name + ' wins!');
-                endGame();
-            } else if (player1Array.length === 5) {
-                console.log('Tie game');
-                endGame();
+                endGame(player1.name + ' wins!');
                 return;
+            } else if (win[i] === b+b+b) {
+                endGame(player2.name + ' wins!');
+                return;
+            } else if ((player1Array.length === 5) && (i === 7)) {
+                endGame('Tie Game');
             }
         }
-
     };
 
-    function endGame() {
+    function endGame(msg) {
         const gameBoardContainer = document.getElementById('game-board-container');
         gameBoardContainer.classList.toggle('disabled');
+
         const main = document.getElementById('main')
-        let restartBtn = document.createElement('div');
-        restartBtn.classList.add('restart-button')
+
+        let announcement = document.createElement('div');
+        announcement.innerText = msg;
+        announcement.classList.add('announcement');
+        main.appendChild(announcement);
+
+        let restartBtn = document.createElement('button');
+        restartBtn.innerText = 'New Game?';
+        restartBtn.classList.add('restart-button');
         main.appendChild(restartBtn);
+        restartBtn.addEventListener('click', resetGame);
+    }
+
+    function resetGame() {
+        let announcement = document.querySelector('.announcement');
+        let restartBtn = document.querySelector('.restart-button');
+        announcement.remove();
+        restartBtn.remove();
+        
+        document.getElementById('game-board-container').classList.toggle('disabled');
+        gameBoard.boardArray.fill('');
+        displayController.updateDisplay();
     }
 
     gameBoard.tiles.forEach(tiles => tiles.addEventListener('click', placeToken));
@@ -99,5 +115,5 @@ const players = (name, token) => {
 
 
 //Temporarily in global scope to make building application easier
-const Player1 = players('Player 1', 'x');
-const Player2 = players('Player 2', 'o');
+const player1 = players('Player 1', 'x');
+const player2 = players('Player 2', 'o');
